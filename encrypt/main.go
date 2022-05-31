@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
@@ -9,6 +10,7 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 func main() {
@@ -25,11 +27,16 @@ func main() {
 		panic("failed to parse DER encoded public key: " + err.Error())
 	}
 
-	var input string
-	fmt.Scanln(&input)
+	fmt.Println("Enter the plaintext you wish to encrypt.")
+
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	input := scanner.Text()
+
 	cipherText := RSA_OAEP_Encrypt(input, *publicKey)
 
 	fmt.Println(cipherText)
+
 	fmt.Scanln()
 }
 

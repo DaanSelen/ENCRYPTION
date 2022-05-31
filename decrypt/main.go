@@ -27,10 +27,14 @@ func main() {
 		panic("failed to parse DER encoded public key: " + err.Error())
 	}
 
+	fmt.Println("Enter the text you wish to decrypt.")
+
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
 	input := scanner.Text()
+
 	RSA_OAEP_Decrypt(input, *privateKey)
+
 	fmt.Scanln()
 }
 
